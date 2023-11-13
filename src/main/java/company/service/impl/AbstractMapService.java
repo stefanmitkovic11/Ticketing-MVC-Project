@@ -25,6 +25,4 @@ public abstract class AbstractMapService<T,ID> {
     void deleteById(ID id) {
         map.remove(id);
     }
-
-
 }
