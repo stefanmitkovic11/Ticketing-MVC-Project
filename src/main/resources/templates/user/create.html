@@ -115,8 +115,8 @@
                                                     <label>Choose a Role</label>
                                                     <select name="role" class="custom-select" th:field="*{role}">
                                                         <option th:value="''" th:tel="Select"></option>
-                                                        <option th:each="each : ${roles}" th:text="${each}"
-                                                                th:value="${each}"></option>
+                                                        <option th:each="each : ${roles}" th:text="${each.description}"
+                                                                th:value="${each.id}"></option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -169,18 +169,18 @@
 
                                             <tbody>
 
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                            <tr th:each="user : ${users}">
+                                                <td th:text="${user.firstName + ' '+ user.lastName}"></td>
+                                                <td th:text="${user.userName}"></td>
+                                                <td th:text="${user.gender}"></td>
+                                                <td th:text="${user.phoneNumber}"></td>
+                                                <td th:text="${user.role.description}"></td>
                                                 <td class="actions">
-                                                    <a href="#">
+                                                    <a th:href="@{/user/update}">
                                                         <button type="button" class="btn btn-warning btn-sm">Update
                                                         </button>
                                                     </a>
-                                                    <a href="#" class="delete-row">
+                                                    <a th:href="@{/user/create}" class="delete-row">
                                                         <button type="button" class="btn btn-secondary btn-sm">Delete
                                                         </button>
                                                     </a>
