@@ -1,12 +1,8 @@
 package company.controller;
 
-import company.bootstrap.DataGenerator;
-import company.dto.RoleDTO;
 import company.dto.UserDTO;
 import company.service.RoleService;
 import company.service.UserService;
-import company.service.impl.RoleServiceImpl;
-import company.service.impl.UserServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,9 +36,16 @@ public class UserController {
 
 
     @PostMapping("/create")
-    public String createUser2(@ModelAttribute(value = "user") UserDTO user){
+    public String insertUser(@ModelAttribute("user") UserDTO user, Model model){
 
-        System.out.println(user);
+        model.addAttribute("user", new UserDTO());
+        model.addAttribute("roles", roleService.findAll());
+
+        userService.save(user);
+
+        model.addAttribute("users", userService.findAll());
+
+        System.out.println(userService.findAll());
 
         return "user/create";
     }

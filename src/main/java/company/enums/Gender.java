@@ -1,6 +1,7 @@
 package company.enums;
 
 public enum Gender {
+
     MALE("Male"),FEMALE("Female");
 
     private final String value;

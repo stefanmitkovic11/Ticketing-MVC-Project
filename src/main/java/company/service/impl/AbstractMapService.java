@@ -14,7 +14,7 @@ public abstract class AbstractMapService<T,ID> {
         return object;
     }
 
-    T findUserById(ID id) {
+    T findById(ID id) {
         return map.get(id);
     }
 
