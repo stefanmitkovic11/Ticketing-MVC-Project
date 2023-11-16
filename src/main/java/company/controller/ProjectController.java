@@ -1,22 +1,11 @@
 package company.controller;
 
 import company.dto.ProjectDTO;
-import company.dto.UserDTO;
 import company.service.ProjectService;
 import company.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.validation.Valid;
-
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/project")
@@ -33,10 +22,8 @@ public class ProjectController {
     @GetMapping("/create")
     public String createProject(Model model) {
 
-        List<UserDTO> listOfManagers = userService.findAll().stream().filter(each -> each.getRole().getDescription().equals("Manager")).collect(Collectors.toList());
-
         model.addAttribute("project",new ProjectDTO());
-        model.addAttribute("managers", listOfManagers);
+        model.addAttribute("managers", userService.findManagers());
         model.addAttribute("projects", projectService.findAll());
 
         return "project/create";
@@ -47,6 +34,45 @@ public class ProjectController {
     public String createProject2(@ModelAttribute("project") ProjectDTO project) {
         projectService.save(project);
 
+
+        return "redirect:/project/create";
+    }
+
+
+    @GetMapping("/update/{code}")
+    public String updateProject(@PathVariable("code") String code, Model model) {
+
+        model.addAttribute("project", projectService.findById(code));
+        model.addAttribute("managers", userService.findManagers());
+        model.addAttribute("projects", projectService.findAll());
+
+
+        return "project/update";
+    }
+
+
+    @PostMapping("/update/{code}")
+    public String updateProject2(@ModelAttribute("project") ProjectDTO project) {
+
+        projectService.update(project);
+
+        return "redirect:/project/create";
+    }
+
+
+    @GetMapping("/delete/{code}")
+    public String deleteProject(@PathVariable("code") String code) {
+
+        projectService.deleteById(code);
+
+        return "redirect:/project/create";
+    }
+
+
+    @GetMapping("/complete/{code}")
+    public String completeProject(@PathVariable("code") String code) {
+
+        projectService.complete(projectService.findById(code));
 
         return "redirect:/project/create";
     }
