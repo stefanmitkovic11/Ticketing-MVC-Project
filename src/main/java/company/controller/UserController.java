@@ -41,17 +41,6 @@ public class UserController {
     }
 
 
-    @GetMapping("/delete/{username}")
-    public String deleteUser(@PathVariable("username") String username){
-
-        userService.deleteById(username);
-
-
-        return "redirect:/user/create";
-    }
-
-
-
     @GetMapping("/update/{username}")
     public String updateUser(@PathVariable("username") String username, Model model){
 
@@ -71,6 +60,17 @@ public class UserController {
 
         return "redirect:/user/create";
     }
+
+
+    @GetMapping("/delete/{username}")
+    public String deleteUser(@PathVariable("username") String username){
+
+        userService.deleteById(username);
+
+
+        return "redirect:/user/create";
+    }
+
 
 
 
