@@ -34,26 +34,22 @@ public class ProjectController {
     public String createProject2(@ModelAttribute("project") ProjectDTO project) {
         projectService.save(project);
 
-
         return "redirect:/project/create";
     }
 
 
     @GetMapping("/update/{code}")
-    public String updateProject(@PathVariable("code") String code, Model model) {
-
+    public String editProject(@PathVariable("code") String code, Model model) {
         model.addAttribute("project", projectService.findById(code));
         model.addAttribute("managers", userService.findManagers());
         model.addAttribute("projects", projectService.findAll());
-
 
         return "project/update";
     }
 
 
-    @PostMapping("/update/{code}")
-    public String updateProject2(@ModelAttribute("project") ProjectDTO project) {
-
+    @PostMapping("/update")
+    public String updateProject(@ModelAttribute("project") ProjectDTO project) {
         projectService.update(project);
 
         return "redirect:/project/create";
@@ -62,7 +58,6 @@ public class ProjectController {
 
     @GetMapping("/delete/{code}")
     public String deleteProject(@PathVariable("code") String code) {
-
         projectService.deleteById(code);
 
         return "redirect:/project/create";
@@ -71,7 +66,6 @@ public class ProjectController {
 
     @GetMapping("/complete/{code}")
     public String completeProject(@PathVariable("code") String code) {
-
         projectService.complete(projectService.findById(code));
 
         return "redirect:/project/create";

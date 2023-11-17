@@ -42,7 +42,7 @@ public class UserController {
 
 
     @GetMapping("/update/{username}")
-    public String updateUser(@PathVariable("username") String username, Model model){
+    public String editUser(@PathVariable("username") String username, Model model){
 
         model.addAttribute("user",userService.findById(username));
         model.addAttribute("roles", roleService.findAll());
@@ -52,8 +52,8 @@ public class UserController {
     }
 
 
-    @PostMapping("/update/{username}")
-    public String updateUser2(@ModelAttribute("user") UserDTO user){
+    @PostMapping("/update")
+    public String updateUser(@ModelAttribute("user") UserDTO user){
 
         userService.update(user);
 
