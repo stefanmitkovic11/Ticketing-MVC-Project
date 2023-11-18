@@ -70,4 +70,22 @@ public class ProjectController {
 
         return "redirect:/project/create";
     }
+
+
+    @GetMapping("/project-status")
+    public String projectStatus(Model model) {
+
+        model.addAttribute("projects",projectService.findAll());
+
+        return "manager/project-status";
+    }
+
+
+    @GetMapping("/project-status/complete/{code}")
+    public String completeProject2(@PathVariable("code") String code) {
+        projectService.complete(projectService.findById(code));
+
+        return "redirect:/project/project-status";
+    }
+
 }

@@ -6,6 +6,7 @@ import company.service.TaskService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TaskServiceImpl extends AbstractMapService<TaskDTO, String> implements TaskService {
@@ -40,5 +41,15 @@ public class TaskServiceImpl extends AbstractMapService<TaskDTO, String> impleme
     @Override
     public void deleteById(String subject) {
         super.deleteById(subject);
+    }
+
+    @Override
+    public List<TaskDTO> listOfUnfinishedTasks() {
+        return super.findAll().stream().filter(task -> !task.getTaskStatus().equals(Status.COMPLETE)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TaskDTO> listOfCompletedTasks() {
+        return super.findAll().stream().filter(task -> task.getTaskStatus().equals(Status.COMPLETE)).collect(Collectors.toList());
     }
 }

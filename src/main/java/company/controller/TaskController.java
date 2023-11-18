@@ -1,6 +1,7 @@
 package company.controller;
 
 import company.dto.TaskDTO;
+import company.enums.Status;
 import company.service.ProjectService;
 import company.service.TaskService;
 import company.service.UserService;
@@ -68,5 +69,43 @@ public class TaskController {
         taskService.update(task);
 
         return "redirect:/task/create";
+    }
+
+
+    @GetMapping("/pending-tasks")
+    public String pendingTasks(Model model) {
+
+        model.addAttribute("tasks", taskService.listOfUnfinishedTasks());
+
+        return "task/pending-tasks";
+    }
+
+    @GetMapping("/pending-task/update/{taskSubject}")
+    public String taskEditStatus(@PathVariable("taskSubject") String taskSubject, Model model) {
+
+        model.addAttribute("task", taskService.findById(taskSubject));
+        model.addAttribute("projects", projectService.findAll());
+        model.addAttribute("employees", userService.findEmployees());
+        model.addAttribute("statuses", Status.values());
+        model.addAttribute("tasks", taskService.listOfUnfinishedTasks());
+
+        return "task/status-update";
+    }
+
+    @PostMapping("/pending-task/update")
+    public String taskUpdateStatus(@ModelAttribute("task") TaskDTO task) {
+
+        taskService.update(task);
+
+        return "redirect:/task/pending-tasks";
+    }
+
+
+    @GetMapping("/archive")
+    public String archiveTask(Model model){
+
+        model.addAttribute("tasks", taskService.listOfCompletedTasks());
+
+        return "task/archive";
     }
 }
