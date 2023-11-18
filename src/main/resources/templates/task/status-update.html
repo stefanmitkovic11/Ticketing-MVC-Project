@@ -30,7 +30,7 @@
                                 </header>
                                 <div class="panel-body">
                                     <!-- ------------------------FORM START----------------------------- -->
-                                    <form th:object="${task}" th:action="@{/task/pending-task/update}" method="post">
+                                    <form th:object="${task}" th:action="@{/task/pending-task/update/{id}(id=${task.taskId})}" method="post">
                                         <div class="row">
                                             <div class="col-sm-6 col-md-6 col-xs-12">
                                                 <div class="form-group">
@@ -129,10 +129,10 @@
                                                 <td th:text="${task.taskProject.projectName}"></td>
                                                 <td th:text="${task.taskSubject}"></td>
                                                 <td th:text="${task.taskAssignedEmployee.firstName +' '+task.taskAssignedEmployee.lastName}"></td>
-                                                <td th:text="${#temporals.format(task.taskProject.projectStartDate, 'MM.dd.yyyy') +' - '+#temporals.format(task.taskProject.projectEndDate, 'MM.dd.yyyy')}"></td>
+                                                <td th:text="${#temporals.format(task.taskAssignedDate, 'MM.dd.yyyy')}"></td>
                                                 <td th:text="${task.taskStatus.value}"></td>
                                                 <td>
-                                                    <a th:href="@{/task/pending-task/update/{id}(id=${task.taskSubject})}" class="btn btn-warning rounded-0">Update</a>
+                                                    <a th:href="@{/task/pending-task/update/{id}(id=${task.taskId})}" class="btn btn-warning rounded-0">Update</a>
                                                 </td>
                                             </tr>
                                             </tbody>

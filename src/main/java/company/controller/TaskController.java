@@ -5,7 +5,6 @@ import company.enums.Status;
 import company.service.ProjectService;
 import company.service.TaskService;
 import company.service.UserService;
-import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -44,18 +43,18 @@ public class TaskController {
         return "redirect:/task/create";
     }
 
-    @GetMapping("/delete/{projectSubject}")
-    public String deleteTask(@PathVariable("projectSubject") String projectSubject) {
+    @GetMapping("/delete/{id}")
+    public String deleteTask(@PathVariable("id") Long id) {
 
-        taskService.deleteById(projectSubject);
+        taskService.deleteById(id);
 
         return "redirect:/task/create";
     }
 
-    @GetMapping("/update/{projectSubject}")
-    public String editTask(@PathVariable("projectSubject") String projectSubject, Model model){
+    @GetMapping("/update/{id}")
+    public String editTask(@PathVariable("id") Long id, Model model){
 
-        model.addAttribute("task", taskService.findById(projectSubject));
+        model.addAttribute("task", taskService.findById(id));
         model.addAttribute("projects", projectService.findAll());
         model.addAttribute("employees", userService.findEmployees());
         model.addAttribute("tasks", taskService.findAll());
@@ -75,27 +74,27 @@ public class TaskController {
     @GetMapping("/pending-tasks")
     public String pendingTasks(Model model) {
 
-        model.addAttribute("tasks", taskService.listOfUnfinishedTasks());
+        model.addAttribute("tasks", taskService.findAllTasksByStatusIsNot(Status.COMPLETE));
 
         return "task/pending-tasks";
     }
 
-    @GetMapping("/pending-task/update/{taskSubject}")
-    public String taskEditStatus(@PathVariable("taskSubject") String taskSubject, Model model) {
+    @GetMapping("/pending-task/update/{id}")
+    public String taskEditStatus(@PathVariable("id") Long id, Model model) {
 
-        model.addAttribute("task", taskService.findById(taskSubject));
+        model.addAttribute("task", taskService.findById(id));
         model.addAttribute("projects", projectService.findAll());
         model.addAttribute("employees", userService.findEmployees());
         model.addAttribute("statuses", Status.values());
-        model.addAttribute("tasks", taskService.listOfUnfinishedTasks());
+        model.addAttribute("tasks", taskService.findAllTasksByStatusIsNot(Status.COMPLETE));
 
         return "task/status-update";
     }
 
-    @PostMapping("/pending-task/update")
-    public String taskUpdateStatus(@ModelAttribute("task") TaskDTO task) {
+    @PostMapping("/pending-task/update/{id}")
+    public String taskUpdateStatus(@PathVariable("id") Long id, @ModelAttribute("task") TaskDTO task) {
 
-        taskService.update(task);
+        taskService.updateStatus(id,task);
 
         return "redirect:/task/pending-tasks";
     }
@@ -104,7 +103,7 @@ public class TaskController {
     @GetMapping("/archive")
     public String archiveTask(Model model){
 
-        model.addAttribute("tasks", taskService.listOfCompletedTasks());
+        model.addAttribute("tasks", taskService.findAllTasksByStatus(Status.COMPLETE));
 
         return "task/archive";
     }

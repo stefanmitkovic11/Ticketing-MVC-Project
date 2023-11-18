@@ -10,6 +10,7 @@ import company.service.ProjectService;
 import company.service.RoleService;
 import company.service.TaskService;
 import company.service.UserService;
+import org.apache.tomcat.jni.Local;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Component;
@@ -46,21 +47,21 @@ public class DataGenerator implements CommandLineRunner {
 
 
         UserDTO user1 = new UserDTO("John", "Kesy",
-                "john@cydeo.com", "Abc1", true, "7459684532", managerRole, Gender.MALE);
+                "john@abc.com", "Abc1", true, "7459684532", managerRole, Gender.MALE);
         UserDTO user5 = new UserDTO("Mike", "Smith",
-                "mike@cydeo.com", "Abc2", true, "7459684532", adminRole, Gender.MALE);
+                "mike@abc.com", "Abc2", true, "7459684532", adminRole, Gender.MALE);
         UserDTO user2 = new UserDTO("Delisa",
-                "Norre", "delisa@cydeo.com", "123", true, "8567412358", managerRole, Gender.FEMALE);
+                "Norre", "delisa@abc.com", "123", true, "8567412358", managerRole, Gender.FEMALE);
         UserDTO user3 = new UserDTO("Craig", "Jark",
-                "craig@cydeo.com", "Abc3", true, "7777775566", employeeRole, Gender.MALE);
+                "craig@abc.com", "Abc3", true, "7777775566", employeeRole, Gender.MALE);
         UserDTO user4 = new UserDTO("Shaun",
-                "Hayns", "shaun@cydeo.com", "Abc4", true, "3256987412", managerRole, Gender.MALE);
+                "Hayns", "shaun@abc.com", "Abc4", true, "3256987412", managerRole, Gender.MALE);
         UserDTO user6 = new UserDTO("Elizebeth",
-                "Loren", "elizebeth@cydeo.com", "Abc4", true, "5306987412", employeeRole, Gender.FEMALE);
+                "Loren", "elizebeth@abc.com", "Abc4", true, "5306987412", employeeRole, Gender.FEMALE);
         UserDTO user7 = new UserDTO("Maria",
-                "Ada", "maria@cydeo.com", "Abc4", true, "9996987412", employeeRole, Gender.FEMALE);
+                "Ada", "maria@abc.com", "Abc4", true, "9996987412", employeeRole, Gender.FEMALE);
         UserDTO user8 = new UserDTO("Bill",
-                "Matt", "bill@cydeo.com", "Abc4", true, "8881239846", employeeRole, Gender.MALE);
+                "Matt", "bill@abc.com", "Abc4", true, "8881239846", employeeRole, Gender.MALE);
 
         userService.save(user1);
         userService.save(user2);
@@ -83,11 +84,11 @@ public class DataGenerator implements CommandLineRunner {
         projectService.save(project4);
 
 
-        TaskDTO task1 = new TaskDTO(project1, user3, "Project Subject1", "Project Details", Status.OPEN);
-        TaskDTO task2 = new TaskDTO(project2, user6, "Project Subject2", "Project Details", Status.IN_PROGRESS);
-        TaskDTO task3 = new TaskDTO(project3, user7, "Project Subject3", "Project Details", Status.COMPLETE);
-        TaskDTO task4 = new TaskDTO(project2, user8, "Project Subject4", "Project Details", Status.OPEN);
-        TaskDTO task5 = new TaskDTO(project4, user6, "Project Subject5", "Project Details", Status.IN_PROGRESS);
+        TaskDTO task1 = new TaskDTO(project1, user3, "Project Subject1", "Project Details", Status.OPEN, LocalDate.now().minusDays(4));
+        TaskDTO task2 = new TaskDTO(project2, user6, "Project Subject2", "Project Details", Status.IN_PROGRESS, LocalDate.now().minusDays(13));
+        TaskDTO task3 = new TaskDTO(project3, user7, "Project Subject3", "Project Details", Status.COMPLETE, LocalDate.now().minusDays(12));
+        TaskDTO task4 = new TaskDTO(project2, user8, "Project Subject4", "Project Details", Status.OPEN, LocalDate.now().minusDays(15));
+        TaskDTO task5 = new TaskDTO(project4, user6, "Project Subject5", "Project Details", Status.IN_PROGRESS, LocalDate.now().minusDays(54));
 
         taskService.save(task1);
         taskService.save(task2);

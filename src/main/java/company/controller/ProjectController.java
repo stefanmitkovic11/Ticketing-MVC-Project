@@ -1,11 +1,14 @@
 package company.controller;
 
 import company.dto.ProjectDTO;
+import company.dto.UserDTO;
 import company.service.ProjectService;
 import company.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/project")
@@ -73,12 +76,17 @@ public class ProjectController {
 
 
     @GetMapping("/project-status")
-    public String projectStatus(Model model) {
+    public String getProjectByManager(Model model){
 
-        model.addAttribute("projects",projectService.findAll());
+        UserDTO manager = userService.findById("delisa@abc.com");
 
-        return "manager/project-status";
+        List<ProjectDTO> projects = projectService.getCountedListOfProjectDTO(manager);
+
+        model.addAttribute("projects",projects);
+
+        return "/manager/project-status";
     }
+
 
 
     @GetMapping("/project-status/complete/{code}")

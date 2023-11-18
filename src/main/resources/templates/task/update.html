@@ -122,11 +122,11 @@
                                                 <td th:text="${task.taskProject.projectName}"></td>
                                                 <td th:text="${task.taskSubject}"></td>
                                                 <td th:text="${task.taskAssignedEmployee.firstName + ' ' + task.taskAssignedEmployee.lastName}"></td>
-                                                <td th:text="${#temporals.format(task.taskProject.projectStartDate, 'MM.dd.yyyy') +' - '+#temporals.format(task.taskProject.projectEndDate, 'MM.dd.yyyy')}"></td>
+                                                <td th:text="${#temporals.format(task.taskAssignedDate,'MM/dd/yyyy')}"></td>
                                                 <td th:text="${task.taskStatus.value}"></td>
                                                 <td class="actions">
-                                                    <a th:href="@{/task/update/{id}(id=${task.taskSubject})}" class="btn btn-warning rounded-0">Update</a>
-                                                    <a th:href="@{/task/delete/{id}(id=${task.taskSubject})}" class="btn btn-danger rounded-0">Delete</a>
+                                                    <a th:href="@{/task/update/{id}(id=${task.taskId})}" class="btn btn-warning rounded-0">Update</a>
+                                                    <a th:href="@{/task/delete/{id}(id=${task.taskId})}" class="btn btn-danger rounded-0">Delete</a>
                                                 </td>
 
                                             </tr>
